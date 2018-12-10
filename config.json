@@ -1,0 +1,19 @@
+{
+  "DATA_STATS_FILE": "/Users/shawpan/Documents/open-source-contributions/bidder_r_and_d/stats2.json",
+  "DEFAULT_FEATURE_VALUES": [[0.0],[0.0],[0.0],[0.0],[0.0], [0.0], [0.0], [0.0], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]],
+  "DATASET_DIR": "/Users/shawpan/Documents/open-source-contributions/bidder_r_and_d/bids/",
+  "OUTPUT_DIR_PREDICT_WR": "/Users/shawpan/Documents/open-source-contributions/bidder_r_and_d/predict_wr",
+  "OUTPUT_DIR_PREDICT_WR": "/Users/shawpan/Documents/open-source-contributions/bidder_r_and_d/predict_wp",
+  "PREDICT_WR_LABELS": ["won"],
+  "PREDICT_WR_REMOVE_FEATURES": ["price", "rtb_bidfloorcurr"],
+  "PREDICT_WP_LABELS": ["bid"],
+  "PREDICT_WP_REMOVE_FEATURES": ["rtb_bidfloorcurr", "price", "publishertotalrevenue"],
+  "PREDICT_WR_DATASET_TRAIN": ["/Users/shawpan/Documents/open-source-contributions/bidder_r_and_d/bids/bid_data_train.csv"],
+  "PREDICT_WR_DATASET_VAL": ["/Users/shawpan/Documents/open-source-contributions/bidder_r_and_d/bids/bid_data_val.csv"],
+  "PREDICT_WR_DATASET_TEST": ["/Users/shawpan/Documents/open-source-contributions/bidder_r_and_d/bids/bid_data_test.csv"],
+  "PREDICT_WP_DATASET_TRAIN": ["/Users/shawpan/Documents/open-source-contributions/bidder_r_and_d/bids/bid_data_train.csv"],
+  "PREDICT_WP_DATASET_VAL": ["/Users/shawpan/Documents/open-source-contributions/bidder_r_and_d/bids/bid_data_val.csv"],
+  "PREDICT_WP_DATASET_TEST": ["/Users/shawpan/Documents/open-source-contributions/bidder_r_and_d/bids/bid_data_test.csv"],
+  "OUTPUT_DIR_WP_OBSERVED": "/Users/shawpan/Documents/open-source-contributions/bidder_r_and_d/wp_observed/",
+  "OUTPUT_DIR_WP_CENSORED": "/Users/shawpan/Documents/open-source-contributions/bidder_r_and_d/wp_censored/"
+}
