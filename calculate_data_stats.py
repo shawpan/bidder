@@ -4,11 +4,11 @@ import config
 import json
 
 CONFIG = config.get_config()
-all_files = CONFIG['PREDICT_WR_DATASET_TRAIN']
+all_files = CONFIG['PREDICT_BID_DATASET_TRAIN']
 dtypes = config.get_types_of_attributes()
 
 def calculate_stats():
-    df = pd.concat((pd.read_csv(f, na_values=["(null)"], dtype=dtypes) for f in all_files))
+    df = pd.concat((pd.read_csv(f, sep=CONFIG['CSV_SEPARATOR'], na_values=["null"], dtype=dtypes) for f in all_files))
     stats_categorical = json.loads(df.describe(include='O').loc[[
         'count', 'unique'
     ]].to_json())
@@ -26,4 +26,4 @@ def calculate_stats():
             'stats': { **stats_numeric , **stats_categorical }
         }, fp=f, indent=4)
 
-# calculate_stats()
+calculate_stats()

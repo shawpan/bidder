@@ -26,11 +26,8 @@ def get_column_names():
     return get_stats()['columns']['all']
 
 def normalize(stats):
-    fn = lambda x: (tf.to_float(x) - stats['mean']) / (stats['std'] + 0.00001)
+    fn = lambda x: (tf.to_float(x) - stats['mean']) / (stats['std'] + CONFIG["EPSILON"])
     return fn
-
-def get_default_values_for_features():
-    return CONFIG['DEFAULT_FEATURE_VALUES']
 
 def get_feature_columns():
     stats = get_stats()
@@ -60,12 +57,16 @@ def get_feature_columns():
 
     return numeric_features + categorical_features
 
-def get_feature_columns_for_wr_prediction():
-    prepare_csv_column_list_for_wr_prediction()
+def get_feature_columns_for_win_prediction():
+    prepare_csv_column_list_for_win_prediction()
     return get_feature_columns()
 
-def get_feature_columns_for_wp_prediction():
-    prepare_csv_column_list_for_wp_prediction()
+def get_feature_columns_for_bid_prediction():
+    prepare_csv_column_list_for_bid_prediction()
+    return get_feature_columns()
+
+def get_feature_columns_for_imp_prediction():
+    prepare_csv_column_list_for_imp_prediction()
     return get_feature_columns()
 
 def get_remove_columns():
@@ -88,7 +89,7 @@ Arguments:
 """
 def _parse_line(line):
     # Decode the line into its fields
-    fields = tf.decode_csv(line, record_defaults=get_default_values_for_features(), na_value='(null)')
+    fields = tf.decode_csv(line, field_delim=CONFIG['CSV_SEPARATOR'], record_defaults=config.get_default_values_for_csv_columns(), na_value='null')
 
     # Pack the result into a dictionary
     features = dict(zip(get_column_names(), fields))
@@ -106,52 +107,77 @@ def _parse_line(line):
 
     return features, labels
 
-def prepare_csv_column_list_for_wr_prediction():
-    set_remove_columns(CONFIG['PREDICT_WR_REMOVE_FEATURES'])
-    set_label_column(CONFIG['PREDICT_WR_LABELS'])
+def prepare_csv_column_list_for_win_prediction():
+    set_remove_columns(CONFIG['PREDICT_WIN_REMOVE_FEATURES'])
+    set_label_column(CONFIG['PREDICT_WIN_LABELS'])
 
-def prepare_csv_column_list_for_wp_prediction():
-    set_remove_columns(CONFIG['PREDICT_WP_REMOVE_FEATURES'])
-    set_label_column(CONFIG['PREDICT_WP_LABELS'])
+def prepare_csv_column_list_for_bid_prediction():
+    set_remove_columns(CONFIG['PREDICT_BID_REMOVE_FEATURES'])
+    set_label_column(CONFIG['PREDICT_BID_LABELS'])
 
-def train_input_fn_for_predict_wr(batch_size=1, num_epochs=1):
-    filenames = CONFIG['PREDICT_WR_DATASET_TRAIN']
-    prepare_csv_column_list_for_wr_prediction()
+def prepare_csv_column_list_for_imp_prediction():
+    set_remove_columns(CONFIG['PREDICT_IMP_REMOVE_FEATURES'])
+    set_label_column(CONFIG['PREDICT_IMP_LABELS'])
+
+""" WIN prediction """
+def train_input_fn_for_predict_win(batch_size=1, num_epochs=1):
+    filenames = CONFIG['PREDICT_WIN_DATASET_TRAIN']
+    prepare_csv_column_list_for_win_prediction()
 
     return csv_input_fn(filenames, batch_size, num_epochs, is_shuffle=True)
 
-def train_input_fn_for_predict_wp(batch_size=1, num_epochs=1):
-    filenames = CONFIG['PREDICT_WP_DATASET_TRAIN']
-    prepare_csv_column_list_for_wp_prediction()
+def validation_input_fn_for_predict_win(batch_size=1, num_epochs=1):
+    filenames = CONFIG['PREDICT_WIN_DATASET_VAL']
+    prepare_csv_column_list_for_win_prediction()
 
     return csv_input_fn(filenames, batch_size, num_epochs, is_shuffle=True)
 
-def test_input_fn_for_predict_wr(filenames=None):
+def test_input_fn_for_predict_win(filenames=None):
     if filenames is None:
-        filenames = CONFIG['PREDICT_WR_DATASET_TEST']
-    prepare_csv_column_list_for_wr_prediction()
+        filenames = CONFIG['PREDICT_WIN_DATASET_TEST']
+    prepare_csv_column_list_for_win_prediction()
 
     return csv_input_fn(filenames, batch_size=1, num_epochs=1, is_shuffle=False)
 
-def test_input_fn_for_predict_wp(filenames=None):
+""" BID prediction """
+def train_input_fn_for_predict_bid(batch_size=1, num_epochs=1):
+    filenames = CONFIG['PREDICT_BID_DATASET_TRAIN']
+    prepare_csv_column_list_for_bid_prediction()
+
+    return csv_input_fn(filenames, batch_size, num_epochs, is_shuffle=True)
+
+def validation_input_fn_for_predict_bid(batch_size=1, num_epochs=1):
+    filenames = CONFIG['PREDICT_BID_DATASET_VAL']
+    prepare_csv_column_list_for_bid_prediction()
+
+    return csv_input_fn(filenames, batch_size, num_epochs, is_shuffle=True)
+
+def test_input_fn_for_predict_bid(filenames=None):
     if filenames is None:
-        filenames = CONFIG['PREDICT_WP_DATASET_TEST']
-    prepare_csv_column_list_for_wp_prediction()
+        filenames = CONFIG['PREDICT_BID_DATASET_TEST']
+    prepare_csv_column_list_for_bid_prediction()
 
     return csv_input_fn(filenames, batch_size=1, num_epochs=1, is_shuffle=False)
 
+""" IMP prediction """
+def train_input_fn_for_predict_imp(batch_size=1, num_epochs=1):
+    filenames = CONFIG['PREDICT_IMP_DATASET_TRAIN']
+    prepare_csv_column_list_for_imp_prediction()
 
-def validation_input_fn_for_predict_wr(batch_size=1, num_epochs=1):
-    filenames = CONFIG['PREDICT_WR_DATASET_VAL']
-    prepare_csv_column_list_for_wr_prediction()
+    return csv_input_fn(filenames, batch_size, num_epochs, is_shuffle=True)
+
+def validation_input_fn_for_predict_imp(batch_size=1, num_epochs=1):
+    filenames = CONFIG['PREDICT_IMP_DATASET_VAL']
+    prepare_csv_column_list_for_imp_prediction()
 
     return csv_input_fn(filenames, batch_size, num_epochs, is_shuffle=True)
 
-def validation_input_fn_for_predict_wp(batch_size=1, num_epochs=1):
-    filenames = CONFIG['PREDICT_WP_DATASET_VAL']
-    prepare_csv_column_list_for_wp_prediction()
+def test_input_fn_for_predict_imp(filenames=None):
+    if filenames is None:
+        filenames = CONFIG['PREDICT_IMP_DATASET_TEST']
+    prepare_csv_column_list_for_imp_prediction()
 
-    return csv_input_fn(filenames, batch_size, num_epochs, is_shuffle=True)
+    return csv_input_fn(filenames, batch_size=1, num_epochs=1, is_shuffle=False)
 
 """ Return dataset in batches from a CSV file
 Arguments:
