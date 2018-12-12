@@ -17,9 +17,9 @@ import numpy as np
 
 CONFIG = config.get_config()
 
-bidding_data.set_stats_file(CONFIG['PREDICT_IMP_DATASET_TRAIN'])
+bidding_data.set_stats_file(CONFIG['PREDICT_WIN_DATASET_TRAIN'])
 
-OUTPUT_DIR = CONFIG['OUTPUT_DIR_PREDICT_IMP']
+OUTPUT_DIR = CONFIG['OUTPUT_DIR_PREDICT_WIN']
 
 BATCH_SIZE = CONFIG['BATCH_SIZE'] # 512
 NUM_EPOCHS = CONFIG['NUM_EPOCHS'] # 4000
@@ -35,7 +35,6 @@ parser.add_argument('--is_test', default=0, type=int, help='Is Test')
 parser.add_argument('--train_steps', default=NUM_EPOCHS, type=int,
                     help='number of training steps')
 
-""" Get the model definition """
 def get_model():
     return get_adanet_model()
 
@@ -60,12 +59,12 @@ def get_adanet_model():
         subnetwork_generator=simple_dnn.Generator(
             learn_mixture_weights=True,
             dropout=CONFIG["DROPOUT"],
-            feature_columns=bidding_data.get_feature_columns_for_imp_prediction(),
+            feature_columns=bidding_data.get_feature_columns_for_win_prediction(),
             optimizer=tf.train.RMSPropOptimizer(learning_rate=ADANET_LEARNING_RATE),
             seed=RANDOM_SEED),
         max_iteration_steps=NUM_EPOCHS // ADANET_ITERATIONS,
         evaluator=adanet.Evaluator(
-            input_fn=lambda : bidding_data.validation_input_fn_for_predict_imp(batch_size=BATCH_SIZE, num_epochs=NUM_EPOCHS),
+            input_fn=lambda : bidding_data.validation_input_fn_for_predict_win(batch_size=BATCH_SIZE, num_epochs=TRAIN_STEPS),
             steps=EVAL_STEPS),
         config=runConfig)
 
@@ -76,10 +75,10 @@ def train_and_evaluate():
     estimator = get_model()
 
     train_spec = tf.estimator.TrainSpec(
-                       input_fn = lambda : bidding_data.train_input_fn_for_predict_imp(batch_size=BATCH_SIZE, num_epochs=NUM_EPOCHS),
+                       input_fn = lambda : bidding_data.train_input_fn_for_predict_win(batch_size=BATCH_SIZE, num_epochs=NUM_EPOCHS),
                        max_steps = NUM_EPOCHS)
     eval_spec = tf.estimator.EvalSpec(
-                       input_fn = lambda : bidding_data.validation_input_fn_for_predict_imp(batch_size=BATCH_SIZE, num_epochs=NUM_EPOCHS),
+                       input_fn = lambda : bidding_data.validation_input_fn_for_predict_win(batch_size=BATCH_SIZE, num_epochs=NUM_EPOCHS),
                        steps = EVAL_STEPS,
                        # exporters=exporter,
                        start_delay_secs = 1, # start evaluating after N seconds

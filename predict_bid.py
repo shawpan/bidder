@@ -16,9 +16,11 @@ import bidding_data
 import config
 import pandas as pd
 import numpy as np
-# import scipy.stats
 
 CONFIG = config.get_config()
+
+bidding_data.set_stats_file(CONFIG['PREDICT_BID_DATASET_TRAIN'])
+
 OUTPUT_DIR = CONFIG['OUTPUT_DIR_PREDICT_BID']
 
 BATCH_SIZE = CONFIG['BATCH_SIZE'] # 512

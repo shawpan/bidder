@@ -15,18 +15,36 @@
   "OUTPUT_DIR_PREDICT_BID": "/Users/shawpan/Documents/open-source-contributions/bidder/predict_bid",
   "OUTPUT_DIR_PREDICT_IMP": "/Users/shawpan/Documents/open-source-contributions/bidder/predict_imp",
   "PREDICT_WIN_LABELS": ["won"],
-  "PREDICT_WIN_REMOVE_FEATURES": ["deliveryid", "price", "targetBid", "req_bid", "imp"],
+  "PREDICT_WIN_REMOVE_FEATURES": ["deliveryid", "price", "targetbid", "req_bid", "imp"],
   "PREDICT_BID_LABELS": ["req_bid"],
-  "PREDICT_BID_REMOVE_FEATURES": ["deliveryid", "price", "targetBid", "imp"],
+  "PREDICT_BID_REMOVE_FEATURES": ["deliveryid", "price", "targetbid", "imp"],
   "PREDICT_IMP_LABELS": ["imp"],
-  "PREDICT_IMP_REMOVE_FEATURES": ["deliveryid", "price", "targetBid", "req_bid", "won"],
-  "PREDICT_WIN_DATASET_TRAIN": ["/Users/shawpan/Documents/open-source-contributions/bidder/data/train.csv"],
-  "PREDICT_WIN_DATASET_VAL": ["/Users/shawpan/Documents/open-source-contributions/bidder/data/val.csv"],
-  "PREDICT_WIN_DATASET_TEST": ["/Users/shawpan/Documents/open-source-contributions/bidder/data/test.csv"],
+  "PREDICT_IMP_REMOVE_FEATURES": ["deliveryid", "price", "targetbid", "req_bid", "won"],
+  "PREDICT_WIN_DATASET_TRAIN": [
+    "/Users/shawpan/Documents/open-source-contributions/bidder/data/won_train.csv",
+    "/Users/shawpan/Documents/open-source-contributions/bidder/data/lost_train.csv"
+  ],
+  "PREDICT_WIN_DATASET_VAL": [
+    "/Users/shawpan/Documents/open-source-contributions/bidder/data/won_val.csv",
+    "/Users/shawpan/Documents/open-source-contributions/bidder/data/lost_val.csv"
+  ],
+  "PREDICT_WIN_DATASET_TEST": [
+    "/Users/shawpan/Documents/open-source-contributions/bidder/data/won_test.csv",
+    "/Users/shawpan/Documents/open-source-contributions/bidder/data/lost_test.csv"
+  ],
   "PREDICT_BID_DATASET_TRAIN": ["/Users/shawpan/Documents/open-source-contributions/bidder/data/val.csv"],
   "PREDICT_BID_DATASET_VAL": ["/Users/shawpan/Documents/open-source-contributions/bidder/data/val.csv"],
   "PREDICT_BID_DATASET_TEST": ["/Users/shawpan/Documents/open-source-contributions/bidder/data/test.csv"],
-  "PREDICT_IMP_DATASET_TRAIN": ["/Users/shawpan/Documents/open-source-contributions/bidder/data/val.csv"],
-  "PREDICT_IMP_DATASET_VAL": ["/Users/shawpan/Documents/open-source-contributions/bidder/data/val.csv"],
-  "PREDICT_IMP_DATASET_TEST": ["/Users/shawpan/Documents/open-source-contributions/bidder/data/test.csv"]
+  "PREDICT_IMP_DATASET_TRAIN": [
+    "/Users/shawpan/Documents/open-source-contributions/bidder/data/won_train.csv",
+    "/Users/shawpan/Documents/open-source-contributions/bidder/data/lost_train.csv"
+  ],
+  "PREDICT_IMP_DATASET_VAL": [
+    "/Users/shawpan/Documents/open-source-contributions/bidder/data/won_val.csv",
+    "/Users/shawpan/Documents/open-source-contributions/bidder/data/lost_val.csv"
+  ],
+  "PREDICT_IMP_DATASET_TEST": [
+    "/Users/shawpan/Documents/open-source-contributions/bidder/data/won_test.csv",
+    "/Users/shawpan/Documents/open-source-contributions/bidder/data/lost_test.csv"
+  ]
 }

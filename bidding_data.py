@@ -10,12 +10,17 @@ CONFIG = config.get_config()
 REMOVE_COLUMNS = []
 LABEL_COLUMN = None
 DATA_STATS = None
+STATS_FILES = None
+
+def set_stats_file(stat_files):
+    global STATS_FILES
+    STATS_FILES = stat_files
 
 def get_stats():
     global DATA_STATS
     if DATA_STATS is None:
         print("Calculating data statistics")
-        calculate_data_stats.calculate_stats()
+        calculate_data_stats.calculate_stats(STATS_FILES)
         with open(CONFIG['DATA_STATS_FILE'], 'r') as f:
             DATA_STATS = json.load(f)
         print("Finished calculating data statistics")

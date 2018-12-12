@@ -21,7 +21,7 @@ def get_types_of_attributes():
         'hour' : np.int_,                   # 01
         'pub_sspid' : np.string_,           # 2
         'pub_accountid' : np.string_,       # 12440
-        'pub_as_siteId' : np.string_,       # 8084
+        'pub_as_siteid' : np.string_,       # 8084
         'pub_as_adspaceid' : np.string_,    # 23678
         'pub_as_domain' : np.string_,       # null
         'pub_as_pageurl' : np.string_,      # null
@@ -37,7 +37,7 @@ def get_types_of_attributes():
         'rtb_viewrate' : np.double,         # null
         'rtb_bidfloor' : np.double,         # 0.315631807
         'rtb_battr' : np.string_,           # null
-        'rtb_tagId' : np.string_,           # 2152980677
+        'rtb_tagid' : np.string_,           # 2152980677
         'user_ip' : np.string_,             # 84.241.195.0
         'user_market' : np.string_,         # 75
         'user_city' : np.string_,           # Amsterdam
